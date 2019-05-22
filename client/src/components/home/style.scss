@@ -1,0 +1,28 @@
+.landingblock {
+	position: relative;
+	height: 100vh;
+	background-size: contain;
+	background-color: black;
+	background-repeat: no-repeat;
+	background-position: center;
+
+	&__textblock {
+		position: absolute;
+		top: 55%;
+		right: 20%;
+		transform: translate(-50%, -50%);
+	}
+
+	&__herotext {
+		color: white;
+		font-family: 'Montaga', serif;
+		font-size: 72px;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+
+	&__caption {
+		color: white;
+		font-style: italic;
+	}
+}

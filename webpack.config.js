@@ -11,20 +11,24 @@ module.exports = {
 		filename: 'bundle.js'
 	},
 	resolve: {
-		extensions: ['.js', '.jsx', '.json', '.css']
+		extensions: ['.js', '.jsx', '.json', '.css'],
+		alias: {
+			components: path.resolve(__dirname, 'client/src/components'),
+			scss: path.resolve(__dirname, 'client/src/scss')
+		}
 	},
 	module: {
 		rules: [
 			{
-				test: /\.css$/,
-				loader: 'style-loader!css-loader'
+				test: /\.scss$/,
+				use: [
+					'style-loader', // creates style nodes from JS strings
+					'css-loader', // translates CSS into CommonJS
+					'sass-loader' // compiles Sass to CSS, using Node Sass by default
+				]
 			},
 			{
-				test: /\.png$/,
-				loader: 'url-loader?limit=100000&minetype=image/png'
-			},
-			{
-				test: /\.jpg/,
+				test: /\.(png|jpe?g|gif|svg)$/,
 				loader: 'file-loader'
 			},
 			{
@@ -32,7 +36,13 @@ module.exports = {
 				include: SRC_DIR,
 				loader: 'babel-loader',
 				query: {
-					presets: ['@babel/preset-react', '@babel/preset-env']
+					presets: [
+						'@babel/preset-react',
+						'@babel/preset-env',
+						{
+							plugins: ['@babel/plugin-proposal-class-properties']
+						}
+					]
 				}
 			}
 		]
