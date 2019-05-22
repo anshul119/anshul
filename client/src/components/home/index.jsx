@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
-import styles from '../scss/home.scss';
+import styles from './style.scss';
 
-const backgroundImg = require('../assets/images/background.jpg');
+const backgroundImg = require('../../assets/images/background.jpg');
 
-class HomePage extends Component {
-	render() {
-		return (
-			<div className="landingblock">
+function HomePage(props) {
+	return (
+		<div>
+			<div
+				className="landingblock"
+				style={{ backgroundImage: `url(${backgroundImg})` }}
+			>
 				<div className="landingblock__textblock">
 					<p className="landingblock__herotext">Hello</p>
 					<p className="landingblock__caption">
 						This is Me being creative
 					</p>
 				</div>
-				<img className="landingblock__image" src={backgroundImg} />
 			</div>
-		);
-	}
+		</div>
+	);
 }
 export default HomePage;

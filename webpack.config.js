@@ -11,7 +11,11 @@ module.exports = {
 		filename: 'bundle.js'
 	},
 	resolve: {
-		extensions: ['.js', '.jsx', '.json', '.css']
+		extensions: ['.js', '.jsx', '.json', '.css'],
+		alias: {
+			components: path.resolve(__dirname, 'client/src/components'),
+			scss: path.resolve(__dirname, 'client/src/scss')
+		}
 	},
 	module: {
 		rules: [
@@ -32,7 +36,13 @@ module.exports = {
 				include: SRC_DIR,
 				loader: 'babel-loader',
 				query: {
-					presets: ['@babel/preset-react', '@babel/preset-env']
+					presets: [
+						'@babel/preset-react',
+						'@babel/preset-env',
+						{
+							plugins: ['@babel/plugin-proposal-class-properties']
+						}
+					]
 				}
 			}
 		]

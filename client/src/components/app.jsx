@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { browserHistory } from 'react-router';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
-import HomePage from './home';
-import Header from './header';
-import styles from '../scss/app.scss';
+import HomePage from 'components/home';
+import Header from 'components/header';
 
-library.add(faBars);
+import styles from '../scss/app.scss';
 
 class App extends Component {
 	render() {

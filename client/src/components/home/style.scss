@@ -1,9 +1,10 @@
 .landingblock {
 	position: relative;
-
-	&__image {
-		width: 100%;
-	}
+	height: 100vh;
+	background-size: contain;
+	background-color: black;
+	background-repeat: no-repeat;
+	background-position: center;
 
 	&__textblock {
 		position: absolute;
@@ -14,6 +15,7 @@
 
 	&__herotext {
 		color: white;
+		font-family: 'Montaga', serif;
 		font-size: 72px;
 		font-weight: bold;
 		text-transform: uppercase;
