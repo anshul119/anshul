@@ -6,21 +6,58 @@
 	background-repeat: no-repeat;
 	background-position: center;
 
-	&__textblock {
+	&__morelink {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		position: absolute;
-		top: 55%;
-		right: 20%;
+		bottom: 0;
+		left: 50%;
 		transform: translate(-50%, -50%);
+		color: white;
+
+		.icon {
+			animation: bounce;
+			animation-duration: 2s;
+			animation-iteration-count: infinite;
+		}
+	}
+
+	&__moretext {
+		font-style: italic;
+	}
+}
+
+.block {
+	padding: 50px;
+	background: black;
+	color: white;
+	text-align: center;
+
+	&__heading {
+		font-size: 24px;
+		margin: 40px;
+	}
+
+	&__text {
 	}
 
 	&__herotext {
-		color: white;
-		font-size: 72px;
-		text-transform: uppercase;
+		font-size: 36px;
+		font-style: italic;
+	}
+}
+
+@keyframes bounce {
+	0% {
+		transform: translateY(0%);
 	}
 
-	&__caption {
-		color: white;
-		font-style: italic;
+	50% {
+		transform: translateY(20%);
+	}
+
+	100% {
+		transform: translateY(0);
 	}
 }

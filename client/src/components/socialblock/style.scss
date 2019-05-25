@@ -1,0 +1,14 @@
+.socialmenu {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+
+	a {
+		cursor: pointer;
+	}
+
+	&__icon {
+		height: 36px;
+		width: 36px;
+	}
+}

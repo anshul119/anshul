@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-
+import SocialBlock from 'components/socialblock';
 import styles from './style.scss';
-
-const fbIcon = require('assets/logos/fb.svg');
-const igIcon = require('assets/logos/ig.svg');
 
 class Drawer extends Component {
 	render() {
@@ -23,22 +20,7 @@ class Drawer extends Component {
 						<li className="menu__item">Pricing</li>
 						<li className="menu__item">Contact</li>
 					</ul>
-					<ul className="drawer__socialmenu">
-						<li className="drawer__socialmenuitem">
-							<embed
-								type="image/svg+xml"
-								src={igIcon}
-								className="drawer__socialmenuicon"
-							/>
-						</li>
-						<li className="drawer__socialmenuitem">
-							<embed
-								type="image/svg+xml"
-								src={fbIcon}
-								className="drawer__socialmenuicon"
-							/>
-						</li>
-					</ul>
+					<SocialBlock />
 				</div>
 			</div>
 		);
