@@ -13,8 +13,9 @@ module.exports = {
 	resolve: {
 		extensions: ['.js', '.jsx', '.json', '.css'],
 		alias: {
-			components: path.resolve(__dirname, 'client/src/components'),
-			scss: path.resolve(__dirname, 'client/src/scss')
+			components: path.join(__dirname, '/client/src/components'),
+			assets: path.join(__dirname, '/client/src/assets'),
+			scss: path.join(__dirname, '/client/src/scss')
 		}
 	},
 	module: {

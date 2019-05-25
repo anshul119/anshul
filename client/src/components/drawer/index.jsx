@@ -1,44 +1,46 @@
 import React, { Component } from 'react';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import styles from './style.scss';
 
-library.add(faBars, faTimes);
+const fbIcon = require('assets/logos/fb.svg');
+const igIcon = require('assets/logos/ig.svg');
 
 class Drawer extends Component {
-	state = { isOpen: false };
-
-	handleHamburgerClick = () => {
-		const { isOpen } = this.state;
-		if (isOpen) {
-			this.setState({ isOpen: false });
-		} else {
-			this.setState({ isOpen: true });
-		}
-	};
-
 	render() {
-		const { isOpen } = this.state;
+		const { isOpen, onClose } = this.props;
 		return (
-			<>
-				{isOpen ? (
-					<div class="drawer">
-						<span
-							className="icon"
-							onClick={this.handleHamburgerClick}
-						>
-							<FontAwesomeIcon icon="bars" />
-						</span>
-						this is my drawer
-					</div>
-				) : (
-					<span className="icon" onClick={this.handleHamburgerClick}>
-						<FontAwesomeIcon icon="bars" />
-					</span>
-				)}
-			</>
+			<div className={`drawer ${isOpen ? 'drawer--isopen' : ''}`}>
+				<span
+					className="drawer__closeicon icon lnr lnr-cross"
+					onClick={onClose}
+				/>
+				<div className="drawer__content">
+					<ul className="menu">
+						<li className="menu__item">Home</li>
+						<li className="menu__item">Story</li>
+						<li className="menu__item">Videos</li>
+						<li className="menu__item">Photos</li>
+						<li className="menu__item">Pricing</li>
+						<li className="menu__item">Contact</li>
+					</ul>
+					<ul className="drawer__socialmenu">
+						<li className="drawer__socialmenuitem">
+							<embed
+								type="image/svg+xml"
+								src={igIcon}
+								className="drawer__socialmenuicon"
+							/>
+						</li>
+						<li className="drawer__socialmenuitem">
+							<embed
+								type="image/svg+xml"
+								src={fbIcon}
+								className="drawer__socialmenuicon"
+							/>
+						</li>
+					</ul>
+				</div>
+			</div>
 		);
 	}
 }

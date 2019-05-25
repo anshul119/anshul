@@ -1,8 +1,53 @@
 .drawer {
 	position: absolute;
 	top: 0;
-	right: 0;
+	right: -300px;
 	height: 100vh;
-	width: 400px;
+	width: 300px;
 	background: white;
+	padding: 100px 40px 40px 40px;
+	transition: 300ms;
+	transition-timing-function: ease-in-out;
+
+	&--isopen {
+		right: 0;
+	}
+
+	&__openicon {
+		color: white;
+	}
+
+	&__closeicon {
+		color: black;
+		position: absolute;
+		top: 25px;
+		right: 0;
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+	}
+
+	&__socialmenu {
+		display: flex;
+		align-items: center;
+		justify-content: space-evenly;
+	}
+
+	&__socialmenuicon {
+		height: 36px;
+		width: 36px;
+		cursor: pointer;
+	}
+}
+
+.menu {
+	&__item {
+		margin: 20px 0;
+		font-size: 24px;
+		cursor: pointer;
+	}
 }
