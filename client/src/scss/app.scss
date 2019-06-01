@@ -1,8 +1,48 @@
 @import url('https://fonts.googleapis.com/css?family=Merriweather:300,300i&display=swap');
 @import './reset.scss';
 
+.isdraweropen {
+	overflow: hidden;
+}
+
 .icon {
 	font-size: 32px;
 	padding: 20px;
 	cursor: pointer;
+}
+
+.heading {
+	position: relative;
+	font-size: 24px;
+	margin: 40px 0;
+	padding-bottom: 5px;
+
+	&::before {
+		content: '';
+		height: 2px;
+		width: 25px;
+		background: white;
+		position: absolute;
+		bottom: 0;
+	}
+}
+
+.grid {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-evenly;
+
+	&__item {
+		margin-bottom: 30px;
+		flex-basis: 48%;
+
+		@media only screen and (min-width: 1025px) {
+			flex-basis: 48%;
+		}
+
+		@media only screen and (max-width: 1024px) {
+			flex-basis: 100%;
+		}
+	}
 }

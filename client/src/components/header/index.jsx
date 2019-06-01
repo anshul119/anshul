@@ -8,22 +8,44 @@ const logo = require('assets/logos/symbol.svg');
 
 class Header extends Component {
 	state = {
-		isOpen: false
+		isDrawerOpen: false,
+		isPageScrolled: false
 	};
 
-	handleHamburgerClick = () => {
-		const { isOpen } = this.state;
-		if (isOpen) {
-			this.setState({ isOpen: false });
+	componentDidMount() {
+		window.onscroll = () => {
+			this.handleScroll();
+		};
+	}
+
+	handleScroll() {
+		if (
+			document.body.scrollTop > 50 ||
+			document.documentElement.scrollTop > 50
+		) {
+			this.setState({ isPageScrolled: true });
 		} else {
-			this.setState({ isOpen: true });
+			this.setState({ isPageScrolled: false });
+		}
+	}
+
+	handleHamburgerClick = () => {
+		const { isDrawerOpen } = this.state;
+		if (isDrawerOpen) {
+			this.setState({ isDrawerOpen: false });
+			document.body.classList.remove('isdraweropen');
+		} else {
+			this.setState({ isDrawerOpen: true });
+			document.body.classList.add('isdraweropen');
 		}
 	};
 
 	render() {
-		const { isOpen } = this.state;
+		const { isDrawerOpen, isPageScrolled } = this.state;
 		return (
-			<header className="header">
+			<header
+				className={`header ${isPageScrolled ? `header--sticky` : ``}`}
+			>
 				<div className="header__logo">
 					<img className="logo_img" src={logo} />
 				</div>
@@ -31,7 +53,10 @@ class Header extends Component {
 					className="drawer__openicon lnr icon lnr-menu"
 					onClick={this.handleHamburgerClick}
 				/>
-				<Drawer isOpen={isOpen} onClose={this.handleHamburgerClick} />
+				<Drawer
+					isOpen={isDrawerOpen}
+					onClose={this.handleHamburgerClick}
+				/>
 			</header>
 		);
 	}

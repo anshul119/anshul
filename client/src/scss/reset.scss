@@ -110,8 +110,6 @@ body {
 	line-height: 1;
 	margin: 0;
 	padding: 0;
-	overflow-x: hidden;
-	user-select: none;
 }
 ol,
 ul {
@@ -131,4 +129,11 @@ q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+a {
+	color: initial;
+	text-decoration: none;
+}
+p {
+	word-break: break-word;
 }

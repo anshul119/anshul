@@ -6,6 +6,10 @@
 	background-repeat: no-repeat;
 	background-position: center;
 
+	@media screen and (orientation: portrait) {
+		background-size: cover;
+	}
+
 	&__morelink {
 		display: flex;
 		flex-direction: column;
@@ -15,6 +19,7 @@
 		left: 50%;
 		transform: translate(-50%, -50%);
 		color: white;
+		cursor: pointer;
 
 		.icon {
 			animation: bounce;
@@ -34,17 +39,30 @@
 	color: white;
 	text-align: center;
 
-	&__heading {
-		font-size: 24px;
-		margin: 40px;
-	}
-
-	&__text {
+	@media only screen and (max-width: 760px) {
+		padding: 20px;
 	}
 
 	&__herotext {
 		font-size: 36px;
+		margin: 80px 0;
 		font-style: italic;
+	}
+}
+
+.video-container {
+	position: relative;
+	padding-bottom: 56.25%;
+	height: 0;
+	overflow: hidden;
+	max-width: 100%;
+
+	& iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
 	}
 }
 

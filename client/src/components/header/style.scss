@@ -1,5 +1,5 @@
 .header {
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	display: flex;
@@ -8,7 +8,19 @@
 	width: 100%;
 	z-index: 1;
 
+	&--sticky {
+		background: black;
+		max-height: 80px;
+		transition: 0.3s;
+
+		.header__logo {
+			width: 80px;
+			transition: width 0.3s;
+		}
+	}
+
 	&__logo {
 		width: 120px;
+		transition: width 0.3s;
 	}
 }
