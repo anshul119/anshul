@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const SRC_DIR = path.join(__dirname, '/client/src');
 const DIST_DIR = path.join(__dirname, '/client/dist');
@@ -35,7 +36,10 @@ module.exports = environment => {
 				},
 				{
 					test: /\.(png|jpe?g|gif|svg)$/,
-					loader: 'file-loader'
+					loader: 'file-loader',
+					options: {
+						name: 'assets/[name].[ext]'
+					}
 				},
 				{
 					test: /\.jsx?/,
@@ -51,6 +55,14 @@ module.exports = environment => {
 								]
 							}
 						]
+					}
+				},
+				{
+					test: /\.html$/,
+					loader: 'html-loader',
+					options: {
+						// THIS will resolve relative URLs to reference from the app/ directory
+						root: `${SRC_DIR}`
 					}
 				}
 			]
@@ -80,7 +92,8 @@ module.exports = environment => {
 						: null
 				)
 			),
-			new FaviconsWebpackPlugin(`${SRC_DIR}/assets/logos/symbol.svg`)
+			new FaviconsWebpackPlugin(`${SRC_DIR}/assets/logos/favicon.svg`),
+			new CleanWebpackPlugin()
 		],
 		devServer: {
 			contentBase: DIST_DIR,

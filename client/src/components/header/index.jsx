@@ -18,7 +18,7 @@ class Header extends Component {
 		};
 	}
 
-	handleScroll() {
+	handleScroll = () => {
 		if (
 			document.body.scrollTop > 50 ||
 			document.documentElement.scrollTop > 50
@@ -27,7 +27,7 @@ class Header extends Component {
 		} else {
 			this.setState({ isPageScrolled: false });
 		}
-	}
+	};
 
 	handleHamburgerClick = () => {
 		const { isDrawerOpen } = this.state;
