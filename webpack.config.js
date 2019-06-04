@@ -56,14 +56,6 @@ module.exports = environment => {
 							}
 						]
 					}
-				},
-				{
-					test: /\.html$/,
-					loader: 'html-loader',
-					options: {
-						// THIS will resolve relative URLs to reference from the app/ directory
-						root: `${SRC_DIR}`
-					}
 				}
 			]
 		},
