@@ -1,7 +1,12 @@
 # Logs
 logs
 *.Logs
+
 # Compiled directory and file
 client/dist/
+
 # Dependency directories
 node_modules/
+
+# IDE
+.idea
