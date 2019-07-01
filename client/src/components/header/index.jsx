@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Drawer from 'components/Drawer';
+import Drawer from 'components/drawer';
 import { Link } from 'react-router-dom';
 
 import styles from './style.scss';
