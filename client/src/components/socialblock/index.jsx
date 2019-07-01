@@ -12,7 +12,7 @@ function SocialBlock() {
 			<li className="socialmenu__item">
 				<a
 					target="_blank"
-					href="https://www.instagram.com/allmadeofstarss/"
+					href="https://www.instagram.com/visualsofanshul/"
 				>
 					<img src={igIcon} className="socialmenu__icon" />
 				</a>
