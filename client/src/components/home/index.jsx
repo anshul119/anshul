@@ -124,7 +124,7 @@ function HomePage() {
 					})}
 				</div>
 				<a
-					href="https://www.instagram.com/allmadeofstarss/"
+					href="https://www.instagram.com/visualsofanshul/"
 					target="_blank"
 					className="button"
 				>
