@@ -21,7 +21,8 @@ module.exports = environment => {
 				components: path.join(__dirname, '/client/src/components'),
 				utils: path.join(__dirname, '/client/src/utils'),
 				assets: path.join(__dirname, '/client/src/assets'),
-				scss: path.join(__dirname, '/client/src/scss')
+				scss: path.join(__dirname, '/client/src/scss'),
+				apis: path.join(__dirname, '/client/src/apis')
 			}
 		},
 		module: {
