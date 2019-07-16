@@ -4,7 +4,7 @@ steps:
     - name: 'gcr.io/cloud-builders/npm'
       args: ['run', 'build']
     - name: gcr.io/cloud-builders/gsutil
-      args: ['cp', '-z', 'js,css', '*', 'gs://www.anshul.art']
+      args: ['cp', '-z', 'js,css', '*', './client/dist']
     - name: gcr.io/cloud-builders/gsutil
       args:
           [
