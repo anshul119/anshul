@@ -7,10 +7,10 @@ steps:
       args:
           [
               '-m',
-              'cp',
+              'rsync',
               '-r',
               '-c',
-              '-z',
+              '-J',
               './client/dist',
               'gs://www.anshul.art',
           ]
