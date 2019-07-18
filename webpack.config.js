@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const SRC_DIR = path.join(__dirname, '/client/src');
 const DIST_DIR = path.join(__dirname, '/client/dist');
@@ -61,6 +62,9 @@ module.exports = environment => {
 			]
 		},
 		plugins: [
+			new CompressionPlugin({
+				deleteOriginalAssets: true
+			}),
 			new webpack.DefinePlugin({
 				'process.env.NODE_ENV': JSON.stringify('production')
 			}),
