@@ -9,6 +9,13 @@ steps:
               '-m',
               '-h',
               'Content-Encoding:gzip',
+              './client/dist/*.js',
+              'gs://www.anshul.art',
+          ]
+    - name: 'gcr.io/cloud-builders/gsutil'
+      args:
+          [
+              '-m',
               'rsync',
               '-r',
               '-c',

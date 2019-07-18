@@ -63,6 +63,7 @@ module.exports = environment => {
 		},
 		plugins: [
 			new CompressionPlugin({
+				test: /\.js(\?.*)?$/i,
 				deleteOriginalAssets: true
 			}),
 			new webpack.DefinePlugin({
