@@ -14,12 +14,3 @@ steps:
               './client/dist',
               'gs://www.anshul.art',
           ]
-    - name: 'gcr.io/cloud-builders/gsutil'
-      args:
-          [
-              '-m',
-              'setmeta',
-              '-h',
-              'Content-Encoding:gzip',
-              'gs://www.anshul.art/*.js.gz',
-          ]
