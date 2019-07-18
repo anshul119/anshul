@@ -4,7 +4,7 @@ steps:
     - name: 'gcr.io/cloud-builders/npm'
       args: ['run', 'build']
     - name: 'gcr.io/cloud-builders/gsutil'
-      args: ['-m', '-h', 'Content-Encoding:gzip', 'gs://www.anshul.art/*.gz.js']
+      args: ['-m', '-h', 'Content-Encoding:gzip', './client/dist/*.js.gz']
     - name: 'gcr.io/cloud-builders/gsutil'
       args:
           [
