@@ -6,6 +6,8 @@ import { latestVideos, YOUTUBE_API_KEY } from 'apis/youtube';
 import styles from './style.scss';
 
 const backgroundImg = require('assets/images/background.jpg');
+const messengerIcon = require('assets/logos/fbm.png');
+
 const images = [
 	require('assets/images/portfolio/tree.jpg'),
 	require('assets/images/portfolio/street.jpg'),
@@ -19,22 +21,22 @@ class HomePage extends Component {
 	};
 
 	componentDidMount() {
-		latestVideos
-			.get('/search', {
-				params: {
-					part: 'id',
-					maxResults: 4,
-					type: 'video',
-					key: YOUTUBE_API_KEY
-				}
-			})
-			.then(res => {
-				const videos = [];
-				res.data.items.map(video => {
-					videos.push(video.id.videoId);
-				});
-				this.setState({ videos });
-			});
+		// latestVideos
+		// 	.get('/search', {
+		// 		params: {
+		// 			part: 'id',
+		// 			maxResults: 4,
+		// 			type: 'video',
+		// 			key: YOUTUBE_API_KEY
+		// 		}
+		// 	})
+		// 	.then(res => {
+		// 		const videos = [];
+		// 		res.data.items.map(video => {
+		// 			videos.push(video.id.videoId);
+		// 		});
+		// 		this.setState({ videos });
+		// 	});
 	}
 
 	render() {
@@ -147,8 +149,25 @@ class HomePage extends Component {
 				</Element>
 				<Element className="block" name="contact">
 					<h1 className="heading">Contact</h1>
-					<p className="block__text">Let's create art. Together.</p>
+					<p className="block__text">
+						Let's create art, together. Write me at
+					</p>
 					<p class="block__herotext">getcreative@anshul.art</p>
+					<p className="block__text">Or, you can even</p>
+					<div class="messenger">
+						<a
+							className="messenger__link"
+							href="https://m.me/1805258423119819"
+							target="_blank"
+						>
+							<img
+								className="messenger__icon"
+								src={messengerIcon}
+								alt="Message Anshul Sharma"
+							/>
+							Message Me Now
+						</a>
+					</div>
 				</Element>
 			</div>
 		);
