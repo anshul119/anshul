@@ -10,7 +10,7 @@ steps:
               'rsync',
               '-r',
               '-c',
-              '-J',
+              '-d',
               './client/dist',
               'gs://www.anshul.art',
           ]

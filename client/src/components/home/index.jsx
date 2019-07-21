@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Element, Link } from 'react-scroll';
 import LazyLoad from 'react-lazy-load';
-import { latestVideos, YOUTUBE_API_KEY } from 'apis/youtube';
+import Instafeed from 'instafeed.js';
 
 import styles from './style.scss';
 
@@ -21,22 +21,22 @@ class HomePage extends Component {
 	};
 
 	componentDidMount() {
-		// latestVideos
-		// 	.get('/search', {
-		// 		params: {
-		// 			part: 'id',
-		// 			maxResults: 4,
-		// 			type: 'video',
-		// 			key: YOUTUBE_API_KEY
-		// 		}
-		// 	})
-		// 	.then(res => {
-		// 		const videos = [];
-		// 		res.data.items.map(video => {
-		// 			videos.push(video.id.videoId);
-		// 		});
-		// 		this.setState({ videos });
-		// 	});
+		const feed = new Instafeed({
+			get: 'user',
+			userId: '233983513',
+			limit: 4,
+			resolution: 'standard_resolution',
+			template: `<div class="grid__item--small">
+							<a href="{{link}}" target="_blank">
+								<img
+									src={{image}}
+									alt="anshul-sharma-photography-luxembourg"
+								/>
+							</a>
+						</div>`,
+			accessToken: '233983513.1677ed0.5702f2e695994cec91254b447a7f06cb'
+		});
+		feed.run();
 	}
 
 	render() {
@@ -125,20 +125,7 @@ class HomePage extends Component {
 				</Element>
 				<Element className="block" name="photos">
 					<h1 className="heading">Photos</h1>
-					<div className="grid">
-						{images.map(image => {
-							return (
-								<div className="grid__item--small">
-									<LazyLoad offsetVertical={500}>
-										<img
-											src={image}
-											alt="anshul-sharma-photography-luxembourg"
-										/>
-									</LazyLoad>
-								</div>
-							);
-						})}
-					</div>
+					<div id="instafeed" className="grid" />
 					<a
 						href="https://www.instagram.com/visualsofanshul/"
 						target="_blank"
