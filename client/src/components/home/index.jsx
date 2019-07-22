@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
 import { Element, Link } from 'react-scroll';
-import LazyLoad from 'react-lazy-load';
 import Instafeed from 'instafeed.js';
 
 import styles from './style.scss';
 
 const backgroundImg = require('assets/images/background.jpg');
+const videosServiceBackground = require('assets/images/videosservicebg.jpg');
+const photosServiceBackground = require('assets/images/photosservicebg.jpg');
 const messengerIcon = require('assets/logos/fbm.png');
-
-const images = [
-	require('assets/images/portfolio/tree.jpg'),
-	require('assets/images/portfolio/street.jpg'),
-	require('assets/images/portfolio/eibsee.jpg'),
-	require('assets/images/portfolio/opera.jpg')
-];
 
 class HomePage extends Component {
 	state = {
@@ -134,13 +128,49 @@ class HomePage extends Component {
 						View More
 					</a>
 				</Element>
-				<Element className="block" name="contact">
-					<h1 className="heading">Contact</h1>
-					<p className="block__text">
-						Let's create art, together. Write me at
-					</p>
-					<p class="block__herotext">getcreative@anshul.art</p>
-					<p className="block__text">Or, you can even</p>
+				<Element className="block" name="services">
+					<h1 className="heading">Services</h1>
+					<div className="grid">
+						<div
+							className="service grid__item"
+							style={{
+								backgroundImage: `linear-gradient(
+									rgba(0, 0, 0, 0.5),
+									rgba(0, 0, 0, 0.5)
+								  ), url(${videosServiceBackground})`
+							}}
+						>
+							<h1 className="service__heading">
+								Video Production
+							</h1>
+							<p className="service__desc">
+								From pre-production, shooting, and
+								post-processing to color correction, grading
+								and, sound design. I have got you covered.
+								Combining creativity with your business, I take
+								your videos from ideas to epic reality.
+							</p>
+							<div className="mask" />
+						</div>
+						<div
+							className="service grid__item"
+							style={{
+								backgroundImage: `linear-gradient(
+									rgba(0, 0, 0, 0.5),
+									rgba(0, 0, 0, 0.5)
+								  ), url(${photosServiceBackground})`
+							}}
+						>
+							<h1 className="service__heading">photography</h1>
+							<p className="service__desc">
+								Specializing in landscape, concept pieces,
+								product photography and, advertisements. My
+								images capture the emotion and essence of brands
+								to create impactful content.
+							</p>
+							<div className="mask" />
+						</div>
+					</div>
 					<div class="messenger">
 						<a
 							className="messenger__link"
@@ -155,6 +185,13 @@ class HomePage extends Component {
 							Message Me Now
 						</a>
 					</div>
+				</Element>
+				<Element className="block" name="contact">
+					<h1 className="heading">Contact</h1>
+					<p className="block__text">
+						Let's create art, together. Write me at
+					</p>
+					<p class="block__herotext">getcreative@anshul.art</p>
 				</Element>
 			</div>
 		);
