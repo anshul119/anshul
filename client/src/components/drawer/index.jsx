@@ -48,6 +48,11 @@ class Drawer extends Component {
 							</Link>
 						</li>
 						<li className="menu__item">
+							<Link to="clients" smooth={true}>
+								Clients
+							</Link>
+						</li>
+						<li className="menu__item">
 							<Link to="contact" smooth={true}>
 								Contact
 							</Link>

@@ -1,13 +1,36 @@
 import React, { Component } from 'react';
 import { Element, Link } from 'react-scroll';
 import Instafeed from 'instafeed.js';
+import Messenger from 'components/messenger';
 
 import styles from './style.scss';
 
 const backgroundImg = require('assets/images/background.jpg');
 const videosServiceBackground = require('assets/images/videosservicebg.jpg');
 const photosServiceBackground = require('assets/images/photosservicebg.jpg');
-const messengerIcon = require('assets/logos/fbm.png');
+
+const clients = [
+	{
+		logo: require('assets/images/clients/culturetrip.svg'),
+		link: ''
+	},
+	{
+		logo: require('assets/images/clients/lonelyplanet.png'),
+		link: ''
+	},
+	{
+		logo: require('assets/images/clients/tedx.jpg'),
+		link: ''
+	},
+	{
+		logo: require('assets/images/clients/rajasthantourism.jpg'),
+		link: ''
+	},
+	{
+		logo: require('assets/images/clients/nest.jpg'),
+		link: ''
+	}
+];
 
 class HomePage extends Component {
 	state = {
@@ -140,17 +163,18 @@ class HomePage extends Component {
 								  ), url(${videosServiceBackground})`
 							}}
 						>
-							<h1 className="service__heading">
-								Video Production
-							</h1>
-							<p className="service__desc">
-								From pre-production, shooting, and
-								post-processing to color correction, grading
-								and, sound design. I have got you covered.
-								Combining creativity with your business, I take
-								your videos from ideas to epic reality.
-							</p>
-							<div className="mask" />
+							<div className="service__text">
+								<h1 className="service__heading">
+									Video Production
+								</h1>
+								<p className="service__desc">
+									From pre-production, shooting, and
+									post-processing to color correction, grading
+									and, sound design. I have got you covered.
+									Combining creativity with your business, I
+									take your videos from ideas to epic reality.
+								</p>
+							</div>
 						</div>
 						<div
 							className="service grid__item"
@@ -161,37 +185,49 @@ class HomePage extends Component {
 								  ), url(${photosServiceBackground})`
 							}}
 						>
-							<h1 className="service__heading">photography</h1>
-							<p className="service__desc">
-								Specializing in landscape, concept pieces,
-								product photography and, advertisements. My
-								images capture the emotion and essence of brands
-								to create impactful content.
-							</p>
-							<div className="mask" />
+							<div className="service__text">
+								<h1 className="service__heading">
+									photography
+								</h1>
+								<p className="service__desc">
+									Specializing in landscape, concept pieces,
+									product photography and, advertisements. My
+									images capture the emotion and essence of
+									brands to create impactful content.
+								</p>
+							</div>
 						</div>
 					</div>
-					<div class="messenger">
-						<a
-							className="messenger__link"
-							href="https://m.me/1805258423119819"
-							target="_blank"
-						>
-							<img
-								className="messenger__icon"
-								src={messengerIcon}
-								alt="Message Anshul Sharma"
-							/>
-							Message Me Now
-						</a>
+					<Messenger />
+				</Element>
+				<Element className="block" name="clients">
+					<h1 className="heading">Clients & Collaborations</h1>
+					<p className="block__text">
+						I have had the pleasure to work with clients from
+						different domains. Are you the next?
+					</p>
+					<div className="clients grid">
+						{clients.map(client => {
+							return (
+								<div className="grid__item--small">
+									<img src={client.logo} />
+								</div>
+							);
+						})}
 					</div>
+					<Messenger />
 				</Element>
 				<Element className="block" name="contact">
 					<h1 className="heading">Contact</h1>
 					<p className="block__text">
 						Let's create art, together. Write me at
 					</p>
-					<p class="block__herotext">getcreative@anshul.art</p>
+					<p class="block__herotext">
+						<span className="block__herotext--highlight">
+							getcreative
+						</span>
+						@anshul.art
+					</p>
 				</Element>
 			</div>
 		);

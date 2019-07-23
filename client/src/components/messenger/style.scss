@@ -1,0 +1,15 @@
+.messenger {
+	&__link {
+		display: flex;
+		align-items: center;
+		width: 210px;
+		padding: 0 5px;
+		color: white;
+		border: 2px solid white;
+		margin: 0 auto;
+	}
+
+	&__icon {
+		margin-right: 5px;
+	}
+}
