@@ -187,7 +187,7 @@ class HomePage extends Component {
 						>
 							<div className="service__text">
 								<h1 className="service__heading">
-									photography
+									Photography
 								</h1>
 								<p className="service__desc">
 									Specializing in landscape, concept pieces,
