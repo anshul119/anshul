@@ -51,7 +51,7 @@ class HomePage extends Component {
 								/>
 							</a>
 						</div>`,
-			accessToken: '233983513.1677ed0.5702f2e695994cec91254b447a7f06cb'
+			accessToken: '233983513.1677ed0.31d9258e04a3464f8315a56baad5ae51'
 		});
 		feed.run();
 	}
