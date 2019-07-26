@@ -37,24 +37,24 @@ class HomePage extends Component {
 		videos: []
 	};
 
-	componentDidMount() {
-		const feed = new Instafeed({
-			get: 'user',
-			userId: '233983513',
-			limit: 4,
-			resolution: 'standard_resolution',
-			template: `<div class="grid__item--small">
-							<a href="{{link}}" target="_blank">
-								<img
-									src={{image}}
-									alt="anshul-sharma-photography-luxembourg"
-								/>
-							</a>
-						</div>`,
-			accessToken: '233983513.1677ed0.31d9258e04a3464f8315a56baad5ae51'
-		});
-		feed.run();
-	}
+	// componentDidMount() {
+	// 	const feed = new Instafeed({
+	// 		get: 'user',
+	// 		userId: '233983513',
+	// 		limit: 4,
+	// 		resolution: 'standard_resolution',
+	// 		template: `<div class="grid__item--small">
+	// 						<a href="{{link}}" target="_blank">
+	// 							<img
+	// 								src={{image}}
+	// 								alt="anshul-sharma-photography-luxembourg"
+	// 							/>
+	// 						</a>
+	// 					</div>`,
+	// 		accessToken: '233983513.1677ed0.31d9258e04a3464f8315a56baad5ae51'
+	// 	});
+	// 	feed.run();
+	// }
 
 	render() {
 		const { videos } = this.state;
@@ -140,17 +140,17 @@ class HomePage extends Component {
 						Watch More
 					</a>
 				</Element>
-				<Element className="block" name="photos">
-					<h1 className="heading">Photos</h1>
-					<div id="instafeed" className="grid" />
-					<a
-						href="https://www.instagram.com/visualsofanshul/"
-						target="_blank"
-						className="button"
-					>
-						View More
-					</a>
-				</Element>
+				{/*<Element className="block" name="photos">*/}
+				{/*	<h1 className="heading">Photos</h1>*/}
+				{/*	<div id="instafeed" className="grid" />*/}
+				{/*	<a*/}
+				{/*		href="https://www.instagram.com/visualsofanshul/"*/}
+				{/*		target="_blank"*/}
+				{/*		className="button"*/}
+				{/*	>*/}
+				{/*		View More*/}
+				{/*	</a>*/}
+				{/*</Element>*/}
 				<Element className="block" name="services">
 					<h1 className="heading">Services</h1>
 					<div className="grid">
