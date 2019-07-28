@@ -85,7 +85,7 @@ module.exports = environment => {
 						: null
 				)
 			),
-			new FaviconsWebpackPlugin(`${SRC_DIR}/assets/logos/favicon.svg`),
+			new FaviconsWebpackPlugin(`${SRC_DIR}/assets/icons/favicon.svg`),
 			new CleanWebpackPlugin()
 		],
 		devServer: {

@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './style.scss';
 
-const messengerIcon = require('assets/logos/fbm.png');
+const messengerIcon = require('assets/icons/fbm.png');
 
 function Messenger() {
 	return (

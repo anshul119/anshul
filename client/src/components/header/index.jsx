@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import styles from './style.scss';
 
-const logo = require('assets/logos/symbol.svg');
+const logo = require('assets/images/logo/symbol.svg');
 
 class Header extends Component {
 	state = {

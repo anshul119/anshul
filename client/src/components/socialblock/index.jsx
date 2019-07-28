@@ -2,9 +2,9 @@ import React from 'react';
 
 import style from './style.scss';
 
-const fbIcon = require('assets/logos/fb.svg');
-const igIcon = require('assets/logos/ig.svg');
-const ytIcon = require('assets/logos/yt.svg');
+const fbIcon = require('assets/icons/fb.svg');
+const igIcon = require('assets/icons/ig.svg');
+const ytIcon = require('assets/icons/yt.svg');
 
 function SocialBlock() {
 	return (
