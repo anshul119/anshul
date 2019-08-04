@@ -14,14 +14,7 @@ const photos = [
 		alt: 'photographer in luxembourg'
 	},
 	{
-		src: require('assets/images/photos/italy.jpg'),
-		title: 'sdfasda',
-		width: 4,
-		height: 5,
-		alt: 'photographer in luxembourg'
-	},
-	{
-		src: require('assets/images/photos/flower.jpg'),
+		src: require('assets/images/photos/ice.jpg'),
 		title: 'sdf',
 		width: 4,
 		height: 5,
@@ -32,14 +25,7 @@ const photos = [
 		title: 'sdf',
 		width: 4,
 		height: 5,
-		alt: 'photographer in luxembourg'
-	},
-	{
-		src: require('assets/images/photos/ice.jpg'),
-		title: 'sdf',
-		width: 4,
-		height: 5,
-		alt: 'photographer in luxembourg'
+		alt: 'portrait photographer in luxembourg'
 	},
 	{
 		src: require('assets/images/photos/temple.jpg'),
@@ -47,6 +33,20 @@ const photos = [
 		width: 4,
 		height: 5,
 		alt: 'photographer in luxembourg'
+	},
+	{
+		src: require('assets/images/photos/italy.jpg'),
+		title: 'sdfasda',
+		width: 4,
+		height: 5,
+		alt: 'photographer in luxembourg'
+	},
+	{
+		src: require('assets/images/photos/green.jpg'),
+		title: 'sdf',
+		width: 1,
+		height: 1,
+		alt: 'portrait photographer in luxembourg'
 	}
 ];
 
