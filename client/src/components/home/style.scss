@@ -45,7 +45,6 @@
 	}
 
 	&__text {
-		margin-bottom: 50px;
 		line-height: 2;
 	}
 
@@ -53,6 +52,10 @@
 		font-size: 36px;
 		margin: 80px 0;
 		font-style: italic;
+
+		a {
+			color: #fff;
+		}
 
 		&--highlight {
 			color: #f2d4be;

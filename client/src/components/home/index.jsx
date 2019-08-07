@@ -52,23 +52,17 @@ class HomePage extends Component {
 					</Link>
 				</Element>
 				<Element className="block" name="story">
-					<h1 className="heading">Story</h1>
+					<h1 className="heading">About</h1>
 					<p class="block__text">
-						My story started in Greece. I went there for a trip and
-						so I brought a GoPro with myself. As small as it was, it
-						suddenly amplified my world. The more shots I made, the
-						more I saw the story unfolding in front of my eyes. I
-						knew I had to create a video. While doing so, I enjoyed
-						the process so much that I started spending time and
-						money to learn how to shoot professional content.
-					</p>
-					<p class="block__text">
-						Working on this skill brought me to awe-inspiring
-						places, and time spent capturing beauty of this world
-						taught me that art matters. Shooting seemed effortless.
-						The question was how to show it to people. After
-						hundreds of hours spend in creative process, I figured
-						it out, and now I am ready to share my skill with you.
+						I am a videographer and photographer from Luxembourg. A
+						creative storyteller at heart, I am an expert in
+						crafting innovative and engaging content for the digital
+						landscape. My powerful imagery, relentless dedication
+						and passion to create has taken me all over the word and
+						has exposed me to different environments. I have worked
+						with clients like TEDxLuxembourgCity, Ministry of
+						Finance, Kuwait and more. I have also been featured on
+						CultureTrip, LonelyPlanet and other travel channels.
 					</p>
 				</Element>
 				<Element className="block" name="videos">
@@ -191,10 +185,12 @@ class HomePage extends Component {
 						Let's create art, together. Write me at
 					</p>
 					<p class="block__herotext">
-						<span className="block__herotext--highlight">
-							getcreative
-						</span>
-						@anshul.art
+						<a href="mailto:getcreative@anshul.art">
+							<span className="block__herotext--highlight">
+								getcreative
+							</span>
+							@anshul.art
+						</a>
 					</p>
 				</Element>
 			</div>
