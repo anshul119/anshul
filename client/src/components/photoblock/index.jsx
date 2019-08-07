@@ -8,45 +8,45 @@ import styles from './style.scss';
 const photos = [
 	{
 		src: require('assets/images/photos/cozy.jpg'),
-		title: 'sdf',
+		title: 'Product shoot for NEST by Arpit Agarwal, India',
 		width: 1,
 		height: 1,
-		alt: 'photographer in luxembourg'
-	},
-	{
-		src: require('assets/images/photos/italy.jpg'),
-		title: 'sdfasda',
-		width: 4,
-		height: 5,
-		alt: 'photographer in luxembourg'
-	},
-	{
-		src: require('assets/images/photos/flower.jpg'),
-		title: 'sdf',
-		width: 4,
-		height: 5,
-		alt: 'photographer in luxembourg'
-	},
-	{
-		src: require('assets/images/photos/field.jpg'),
-		title: 'sdf',
-		width: 4,
-		height: 5,
-		alt: 'photographer in luxembourg'
+		alt: 'product photographer in luxembourg'
 	},
 	{
 		src: require('assets/images/photos/ice.jpg'),
-		title: 'sdf',
+		title: 'Hunting for perspective in Dolomites with Thule backpack',
 		width: 4,
 		height: 5,
-		alt: 'photographer in luxembourg'
+		alt: 'product photographer in luxembourg'
+	},
+	{
+		src: require('assets/images/photos/field.jpg'),
+		title: 'Portrait shoot in Luxembourg',
+		width: 4,
+		height: 5,
+		alt: 'portrait photographer in luxembourg'
 	},
 	{
 		src: require('assets/images/photos/temple.jpg'),
-		title: 'sdf',
+		title: 'Framing the temple in Mathura, India',
 		width: 4,
 		height: 5,
-		alt: 'photographer in luxembourg'
+		alt: 'Architecture photographer in luxembourg'
+	},
+	{
+		src: require('assets/images/photos/italy.jpg'),
+		title: 'Contrasting nature of South Tyrol, Italy',
+		width: 4,
+		height: 5,
+		alt: 'Landscape photographer in luxembourg'
+	},
+	{
+		src: require('assets/images/photos/green.jpg'),
+		title: 'Portrait shoot in Luxembourg',
+		width: 1,
+		height: 1,
+		alt: 'portrait photographer in luxembourg'
 	}
 ];
 
