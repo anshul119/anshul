@@ -58,9 +58,9 @@ class HomePage extends Component {
 						creative storyteller at heart, I am an expert in
 						crafting innovative and engaging content for the digital
 						landscape. My powerful imagery, relentless dedication
-						and passion to create has taken me all over the word and
-						has exposed me to different environments. I have worked
-						with clients like TEDxLuxembourgCity, Ministry of
+						and passion to create has taken me all over the world
+						and has exposed me to different environments. I have
+						worked with clients like TEDxLuxembourgCity, Ministry of
 						Finance, Kuwait and more. I have also been featured on
 						CultureTrip, LonelyPlanet and other travel channels.
 					</p>
