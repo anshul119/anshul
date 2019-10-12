@@ -2,11 +2,16 @@ import React from 'react';
 
 import styles from './style.scss';
 
-const messengerIcon = require('assets/icons/fbm.png');
+const messengerIconDark = require('assets/icons/fbm-dark.png');
+const messengerIconLight = require('assets/icons/fbm-light.svg');
 
-function Messenger() {
+function Messenger(props) {
 	return (
-		<div class="messenger">
+		<div
+			class={`messenger ${
+				props.theme ? `messenger--${props.theme}` : 'messenger--dark'
+			}`}
+		>
 			<a
 				className="messenger__link"
 				href="https://m.me/1805258423119819"
@@ -14,7 +19,11 @@ function Messenger() {
 			>
 				<img
 					className="messenger__icon"
-					src={messengerIcon}
+					src={
+						props.theme === 'light'
+							? messengerIconLight
+							: messengerIconDark
+					}
 					alt="Message Anshul Sharma"
 				/>
 				Message Me Now
