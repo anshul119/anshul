@@ -12,5 +12,5 @@ steps:
               '-c',
               '-d',
               './client/dist',
-              'gs://www.anshul.art',
+              'gs://www.luxem.work',
           ]
