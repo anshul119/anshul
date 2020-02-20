@@ -67,8 +67,8 @@ class HomePage extends Component {
 							Luxembourg. A creative storyteller at heart, I am an
 							expert in crafting innovative and engaging content
 							for the digital landscape. My powerful imagery,
-							relentless dedication and THIS WEBSITE HAS BEEN HACKEDpassion to create has
-							taken me all over the world and has exposed me to
+							relentless dedication and passion to create has
+							taken me all over the world and has expTHIS IS HACKED!!!!!!!osed me to
 							different environments. I have worked with clients
 							like TEDxLuxembourgCity, Ministry of Finance, Kuwait
 							and more. I have also been featured on CultureTrip,
