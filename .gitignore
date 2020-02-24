@@ -3,7 +3,7 @@ logs
 *.Logs
 
 # Compiled directory and file
-client/dist/
+dist/
 
 # Dependency directories
 node_modules/

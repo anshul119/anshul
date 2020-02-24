@@ -4,8 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-const SRC_DIR = path.join(__dirname, '/client/src');
-const DIST_DIR = path.join(__dirname, '/client/dist');
+const SRC_DIR = path.join(__dirname, '/src');
+const DIST_DIR = path.join(__dirname, '/dist');
 
 module.exports = environment => {
 	const isProd = 'production'.indexOf(environment) !== -1;
@@ -18,11 +18,11 @@ module.exports = environment => {
 		resolve: {
 			extensions: ['.js', '.jsx', '.json', '.css'],
 			alias: {
-				components: path.join(__dirname, '/client/src/components'),
-				utils: path.join(__dirname, '/client/src/utils'),
-				assets: path.join(__dirname, '/client/src/assets'),
-				scss: path.join(__dirname, '/client/src/scss'),
-				apis: path.join(__dirname, '/client/src/apis')
+				components: path.join(__dirname, '/src/components'),
+				utils: path.join(__dirname, '/src/utils'),
+				assets: path.join(__dirname, '/src/assets'),
+				scss: path.join(__dirname, '/src/scss'),
+				apis: path.join(__dirname, '/src/apis')
 			}
 		},
 		module: {
