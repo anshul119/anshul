@@ -11,6 +11,6 @@ steps:
               '-r',
               '-c',
               '-d',
-              './client/dist',
+              './dist',
               'gs://www.luxem.work',
           ]
