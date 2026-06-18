@@ -1,10 +1,12 @@
 import { NavLink } from 'react-router-dom';
+import logoImg from '../assets/logo.png';
 
 export default function Header() {
   return (
     <header className="site-header">
       <div className="container header-container">
         <NavLink to="/" className="logo">
+          <img src={logoImg} alt="Anshul Sharma" className="logo-icon" />
           ANSHUL SHARMA
         </NavLink>
         <nav>

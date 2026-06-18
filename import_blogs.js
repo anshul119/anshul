@@ -2,7 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { getFirestore, collection, addDoc, getDocs, query, where } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, getDocs, query, where, updateDoc, doc } from 'firebase/firestore';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { JSDOM } from 'jsdom';
 
 // Firebase credentials
@@ -20,12 +21,75 @@ const email = process.argv[2];
 const password = process.argv[3];
 
 if (!email || !password) {
-  console.error("Usage: node import_blogs.js <admin_email> <admin_password>");
+  console.error("Usage: node import_blogs.js <admin_email> <admin_password> [--overwrite] [--only <title>]");
   process.exit(1);
 }
 
 // Path to the saved Squarespace JSON file
 const jsonFilePath = "/Users/anshulsharma/.gemini/antigravity/brain/57aeadad-b386-4eed-ab6b-e75654f78fad/.system_generated/steps/151/content.md";
+
+// Helper to download image from Squarespace CDN, upload to Firebase Storage, and catalog in Media Library
+async function uploadImageToFirebase(imageUrl, storage, db) {
+  if (!imageUrl) return "";
+
+  // Clean the URL (remove query params)
+  const cleanUrl = imageUrl.split('?')[0];
+  
+  // Extract unique identifier from the Squarespace URL
+  const parts = cleanUrl.split('/');
+  const filename = parts[parts.length - 1] || 'image.jpg';
+  const imageId = parts[parts.length - 2] || Date.now().toString();
+  const storagePath = `media/imported_${imageId}_${filename}`;
+
+  try {
+    // 1. Check if this file is already in media_library to avoid redundant downloads
+    const mediaRef = collection(db, 'media_library');
+    const q = query(mediaRef, where('storagePath', '==', storagePath));
+    const snap = await getDocs(q);
+    
+    if (!snap.empty) {
+      const existingUrl = snap.docs[0].data().url;
+      console.log(`  -> Image already migrated: ${filename} (using existing URL)`);
+      return existingUrl;
+    }
+
+    console.log(`  -> Downloading image: ${filename}...`);
+    // Request at high resolution format=1500w to match homepage resolution
+    const downloadUrl = cleanUrl.includes('squarespace-cdn.com') 
+      ? `${cleanUrl}?format=1500w` 
+      : imageUrl;
+      
+    const res = await fetch(downloadUrl);
+    if (!res.ok) throw new Error(`Fetch failed with status ${res.status}`);
+    
+    const buffer = await res.arrayBuffer();
+    const mimeType = res.headers.get('content-type') || 'image/jpeg';
+    const size = buffer.byteLength;
+
+    console.log(`  -> Uploading to Firebase Storage: ${storagePath} (${(size / 1024).toFixed(1)} KB)...`);
+    const fileRef = ref(storage, storagePath);
+    await uploadBytes(fileRef, new Uint8Array(buffer), { contentType: mimeType });
+    const firebaseUrl = await getDownloadURL(fileRef);
+
+    // 2. Add catalog document in media_library
+    const mediaPayload = {
+      url: firebaseUrl,
+      storagePath,
+      filename,
+      mimeType,
+      size,
+      uploadedAt: new Date().toISOString()
+    };
+    await addDoc(collection(db, 'media_library'), mediaPayload);
+    console.log(`  -> Successfully registered in Media Library!`);
+    
+    return firebaseUrl;
+  } catch (err) {
+    console.error(`  -> Failed to migrate image ${imageUrl}:`, err.message);
+    // Return original URL as fallback so the import doesn't break
+    return imageUrl;
+  }
+}
 
 async function main() {
   console.log("Reading Squarespace JSON data...");
@@ -66,6 +130,7 @@ async function main() {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app);
+  const storage = getStorage(app);
 
   // Sign in
   try {
@@ -77,10 +142,19 @@ async function main() {
     process.exit(1);
   }
 
+  // Check filter flags
+  const onlyTitleIndex = process.argv.indexOf('--only');
+  const onlyTitle = onlyTitleIndex !== -1 ? process.argv[onlyTitleIndex + 1] : "";
+  const isOverwrite = process.argv.includes('--overwrite') || process.argv.includes('-o');
+
   // Process and import
   let importedCount = 0;
   
   for (const item of items) {
+    if (onlyTitle && !item.title.toLowerCase().includes(onlyTitle.toLowerCase())) {
+      continue;
+    }
+
     console.log(`\nProcessing: "${item.title}" (${item.urlId})`);
     
     // Convert publish timestamp to YYYY-MM-DD
@@ -94,28 +168,57 @@ async function main() {
     
     // Parse the body HTML blocks using JSDOM
     const dom = new JSDOM(item.body || '');
-    const doc = dom.window.document;
+    const docElement = dom.window.document;
     
     // Select all potential blocks
-    const sqsBlocks = doc.querySelectorAll('.sqs-block');
+    const sqsBlocks = docElement.querySelectorAll('.sqs-block');
     const parsedBlocks = [];
     
     sqsBlocks.forEach((block) => {
-      // 1. Check for Image Block
-      if (block.classList.contains('image-block') || block.querySelector('img')) {
-        const img = block.querySelector('img');
-        if (img) {
+      // 1. Check for Gallery Block
+      const isGallery = block.classList.contains('gallery-block') || block.querySelector('.sqs-gallery');
+      if (isGallery) {
+        const imgs = block.querySelectorAll('img');
+        let blockImgsCount = 0;
+        imgs.forEach(img => {
+          if (img.closest('noscript')) return; // skip duplicates
+          
           const imgUrl = img.getAttribute('data-src') || img.getAttribute('src');
           if (imgUrl) {
-            // Check if it duplicates the cover image (ignoring query params)
             const cleanImgUrl = imgUrl.split('?')[0];
             const cleanCoverUrl = coverImageUrl.split('?')[0];
             if (cleanImgUrl === cleanCoverUrl) {
               console.log(`  -> Skipped duplicate cover image block: ${imgUrl.substring(0, 50)}...`);
               return;
             }
+            parsedBlocks.push({
+              type: 'single_photo',
+              url: imgUrl,
+              caption: ""
+            });
+            blockImgsCount++;
+          }
+        });
+        if (blockImgsCount > 0) {
+          console.log(`  -> Extracted Gallery: ${blockImgsCount} images`);
+        }
+        return;
+      }
 
-            // Find caption if available
+      // 2. Check for standard Image Block
+      const isImageBlock = block.classList.contains('image-block') || (block.querySelector('img') && !block.querySelector('.sqs-gallery'));
+      if (isImageBlock) {
+        const img = block.querySelector('img');
+        if (img && !img.closest('noscript')) {
+          const imgUrl = img.getAttribute('data-src') || img.getAttribute('src');
+          if (imgUrl) {
+            const cleanImgUrl = imgUrl.split('?')[0];
+            const cleanCoverUrl = coverImageUrl.split('?')[0];
+            if (cleanImgUrl === cleanCoverUrl) {
+              console.log(`  -> Skipped duplicate cover image block: ${imgUrl.substring(0, 50)}...`);
+              return;
+            }
+            
             const captionEl = block.querySelector('.image-caption p, figcaption p');
             const caption = captionEl ? captionEl.textContent.trim() : "";
             
@@ -127,20 +230,31 @@ async function main() {
             console.log(`  -> Extracted Image: ${imgUrl.substring(0, 50)}... (${caption})`);
           }
         }
-      } 
-      // 2. Check for Text Block
-      else if (block.classList.contains('html-block') || block.classList.contains('markdown-block') || block.querySelector('.sqs-html-content')) {
-        const textElements = block.querySelectorAll('.sqs-html-content p, .sqs-html-content h2, .sqs-html-content h3');
+        return;
+      }
+
+      // 3. Check for HTML / Text Block
+      const isTextBlock = block.classList.contains('html-block') || block.classList.contains('markdown-block') || block.querySelector('.sqs-html-content');
+      if (isTextBlock) {
+        const textElements = block.querySelectorAll('p, h1, h2, h3, h4, ul, ol');
         const paragraphs = [];
         
         textElements.forEach(el => {
-          let text = el.textContent.trim();
-          if (text) {
+          if (el.closest('li') && el.tagName !== 'LI') return; // skip nested tags in lists
+          
+          let html = el.innerHTML.trim();
+          if (html) {
             if (el.tagName.startsWith('H')) {
-              // Format headings with bold caps in our text blocks
-              text = `**${text.toUpperCase()}**`;
+              paragraphs.push(`**${el.textContent.trim().toUpperCase()}**`);
+            } else if (el.tagName === 'UL' || el.tagName === 'OL') {
+              const itemsText = [];
+              el.querySelectorAll('li').forEach(li => {
+                itemsText.push(`- ${li.innerHTML.trim()}`);
+              });
+              paragraphs.push(itemsText.join('\n'));
+            } else {
+              paragraphs.push(html);
             }
-            paragraphs.push(text);
           }
         });
         
@@ -149,17 +263,20 @@ async function main() {
             type: 'text',
             value: paragraphs.join('\n\n')
           });
-          console.log(`  -> Extracted Text block (${paragraphs.length} paragraphs)`);
+          console.log(`  -> Extracted Text block (${paragraphs.length} elements)`);
         }
+        return;
       }
-      // 3. Check for Iframe/Embed Block
-      else if (block.querySelector('iframe')) {
+
+      // 4. Check for Embed
+      if (block.querySelector('iframe')) {
         const iframe = block.querySelector('iframe');
         parsedBlocks.push({
           type: 'embed',
           code: iframe.outerHTML
         });
         console.log("  -> Extracted video iframe embed block");
+        return;
       }
     });
 
@@ -178,12 +295,23 @@ async function main() {
       ? item.excerpt.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim() 
       : "";
 
+    // 3. Migrate Cover Image & body images to Firebase Storage
+    console.log(`  -> Migrating cover image to Storage...`);
+    const finalCoverUrl = await uploadImageToFirebase(coverImageUrl, storage, db);
+
+    console.log(`  -> Migrating body images to Storage...`);
+    for (const block of parsedBlocks) {
+      if (block.type === 'single_photo' && block.url) {
+        block.url = await uploadImageToFirebase(block.url, storage, db);
+      }
+    }
+
     const articlePayload = {
       title: item.title,
       tag: tag,
       date: date,
       excerpt: cleanExcerpt,
-      coverImageUrl: coverImageUrl,
+      coverImageUrl: finalCoverUrl,
       status: "published",
       blocks: parsedBlocks,
       createdAt: new Date().toISOString(),
@@ -191,13 +319,24 @@ async function main() {
     };
 
     try {
-      // Check if article with this title and date already exists to prevent duplicate runs
+      // Check if article with this title and date already exists
       const articlesRef = collection(db, 'articles');
       const q = query(articlesRef, where('title', '==', item.title), where('date', '==', date));
       const existingSnap = await getDocs(q);
       
       if (!existingSnap.empty) {
-        console.log(`  -> Article already exists in Firestore. Skipping...`);
+        if (isOverwrite) {
+          console.log(`  -> Article exists in Firestore. Overwriting...`);
+          const docId = existingSnap.docs[0].id;
+          await updateDoc(doc(db, 'articles', docId), {
+            ...articlePayload,
+            updatedAt: new Date().toISOString()
+          });
+          console.log(`  -> Successfully updated!`);
+          importedCount++;
+        } else {
+          console.log(`  -> Article already exists in Firestore. Skipping (use --overwrite to force update)...`);
+        }
         continue;
       }
 
@@ -209,7 +348,7 @@ async function main() {
     }
   }
 
-  console.log(`\nMigration completed! Imported ${importedCount} new stories into Firestore.`);
+  console.log(`\nMigration completed! Processed ${importedCount} stories into Firestore.`);
   process.exit(0);
 }
 

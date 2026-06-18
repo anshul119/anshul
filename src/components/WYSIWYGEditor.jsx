@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { Bold, Italic, Link, Heading2, Heading3, Image, Code, Trash2 } from 'lucide-react';
 
-export default function WYSIWYGEditor({ html, onChange, onImageUpload }) {
+export default function WYSIWYGEditor({ html, onChange, onImageSelectRequest }) {
   const editorRef = useRef(null);
 
   // Sync editor content with external state, but avoid cursor jumping on state updates
@@ -49,21 +49,25 @@ export default function WYSIWYGEditor({ html, onChange, onImageUpload }) {
     handleInput();
   };
 
-  const handleInsertImage = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    
-    try {
-      const url = await onImageUpload(file);
-      editorRef.current.focus();
-      // Insert image with standard minimalist styling
-      const imgHtml = `<img src="${url}" alt="" style="max-width: 100%; height: auto; display: block; margin: 2rem auto;" />`;
-      insertHtmlAtCursor(imgHtml);
-    } catch (err) {
-      console.error("Image insertion error:", err);
-      alert("Failed to upload image.");
-    } finally {
-      e.target.value = ''; // Reset file input
+  const handleInsertImage = async () => {
+    if (onImageSelectRequest) {
+      try {
+        const url = await onImageSelectRequest();
+        if (url) {
+          editorRef.current.focus();
+          const imgHtml = `<img src="${url}" alt="" style="max-width: 100%; height: auto; display: block; margin: 2rem auto;" />`;
+          insertHtmlAtCursor(imgHtml);
+        }
+      } catch (err) {
+        console.warn("Image insert cancelled or failed:", err);
+      }
+    } else {
+      const url = prompt("Enter Image URL:");
+      if (url) {
+        editorRef.current.focus();
+        const imgHtml = `<img src="${url}" alt="" style="max-width: 100%; height: auto; display: block; margin: 2rem auto;" />`;
+        insertHtmlAtCursor(imgHtml);
+      }
     }
   };
 
@@ -167,15 +171,15 @@ export default function WYSIWYGEditor({ html, onChange, onImageUpload }) {
             <Link size={16} />
           </button>
 
-          <label className="icon-btn" title="Insert Image" style={{ cursor: 'pointer', padding: '6px', display: 'inline-flex', alignItems: 'center' }}>
+          <button 
+            type="button" 
+            onClick={handleInsertImage} 
+            className="icon-btn" 
+            title="Insert Image"
+            style={{ padding: '6px', display: 'inline-flex', alignItems: 'center' }}
+          >
             <Image size={16} />
-            <input 
-              type="file" 
-              accept="image/*" 
-              onChange={handleInsertImage} 
-              style={{ display: 'none' }} 
-            />
-          </label>
+          </button>
 
           <button 
             type="button" 
