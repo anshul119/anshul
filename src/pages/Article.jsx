@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
+import renderArticleText from '../components/renderArticleText';
 
 export default function Article() {
   const { id } = useParams();
@@ -31,11 +32,11 @@ export default function Article() {
     return new Date(dateString).toLocaleDateString('en-US', options);
   }
 
-  // Simple text renderer that converts newlines into paragraph tags
+  // Legacy blocks combine paragraph breaks with inline HTML formatting.
   function renderParagraphs(text) {
     if (!text) return null;
     return text.split('\n\n').map((paragraph, index) => (
-      <p key={index}>{paragraph}</p>
+      <p key={index}>{renderArticleText(paragraph)}</p>
     ));
   }
 
@@ -92,7 +93,7 @@ export default function Article() {
               switch (block.type) {
                 case 'text':
                   return (
-                    <div key={index} className="block-text">
+                    <div key={index} className="block-text html-content">
                       {renderParagraphs(block.value)}
                     </div>
                   );
